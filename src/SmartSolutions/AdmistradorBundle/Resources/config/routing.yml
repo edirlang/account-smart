@@ -1,0 +1,11 @@
+smart_solutions_admistrador_clientes:
+    resource: "@SmartSolutionsAdmistradorBundle/Resources/config/routing/clientes.yml"
+    prefix:   /clientes
+
+smart_solutions_admistrador_users:
+    resource: "@SmartSolutionsAdmistradorBundle/Resources/config/routing/users.yml"
+    prefix:   /users
+
+smart_solutions_admistrador_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: SmartSolutionsAdmistradorBundle:Default:index }

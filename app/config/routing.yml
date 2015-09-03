@@ -1,0 +1,7 @@
+smart_solutions_admistrador:
+    resource: "@SmartSolutionsAdmistradorBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
