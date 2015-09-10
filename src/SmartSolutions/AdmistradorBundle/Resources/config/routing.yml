@@ -1,3 +1,11 @@
+smart_solutions_admistrador_pension:
+    resource: "@SmartSolutionsAdmistradorBundle/Resources/config/routing/pension.yml"
+    prefix:   /pension
+
+smart_solutions_admistrador_eps:
+    resource: "@SmartSolutionsAdmistradorBundle/Resources/config/routing/eps.yml"
+    prefix:   /eps
+
 smart_solutions_admistrador_clientes:
     resource: "@SmartSolutionsAdmistradorBundle/Resources/config/routing/clientes.yml"
     prefix:   /clientes

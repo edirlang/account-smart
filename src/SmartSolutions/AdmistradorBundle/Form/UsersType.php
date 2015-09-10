@@ -15,17 +15,19 @@ class UsersType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username')
-            ->add('nombre')
-            ->add('apellido')
-            ->add('numDocumento')
-            ->add('email')
-            ->add('telefono')
-            ->add('salarioBasico')
-            ->add('rol')
-            ->add('salt')
-            ->add('password')
-            ->add('isactive')
+            ->add('username', 'text' ,array('attr' => array('class' => 'form-control') ))
+            ->add('nombre', 'text' ,array('attr' => array('class' => 'form-control') ))
+            ->add('apellido', 'text' ,array('attr' => array('class' => 'form-control') ))
+            ->add('numDocumento', 'number' ,array('attr' => array('class' => 'form-control') ))
+            ->add('email', 'email' ,array('attr' => array('class' => 'form-control') ))
+            ->add('telefono', 'number' ,array('attr' => array('class' => 'form-control') ))
+            ->add('salarioBasico', 'text' ,array('attr' => array('class' => 'form-control') ))
+            ->add('rol', 'text' ,array('attr' => array('class' => 'form-control') ))
+            ->add('salt', 'text' ,array('attr' => array('class' => 'form-control') ))
+            ->add('password', 'text' ,array('attr' => array('class' => 'form-control') ))
+            ->add('eps','entity', array('class' => 'SmartSolutionsAdmistradorBundle:Eps', 'property' => 'nombre', 'attr' => array('class' => 'form-control') ))
+            ->add('pension','entity', array('class' => 'SmartSolutionsAdmistradorBundle:Pension', 'property' => 'nombre', 'attr' => array('class' => 'form-control') ))
+            ->add('isactive', 'choice', array('choices'  => array('1' => 'Activado', '0' => 'Desactivado'), 'attr' => array('class' => 'form-control'), 'label' => 'Estado' ))
         ;
     }
     

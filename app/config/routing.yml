@@ -1,7 +1,15 @@
 smart_solutions_admistrador:
     resource: "@SmartSolutionsAdmistradorBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /admin
 
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+logout:
+    path:   /logout
+login:
+    path:     /login
+    defaults: { _controller: SmartSolutionsAdmistradorBundle:Default:login }
+login_check:
+    path:     /login_check
+    defaults: { _controller: SmartSolutionsAdmistradorBundle:Default:loginCheck }

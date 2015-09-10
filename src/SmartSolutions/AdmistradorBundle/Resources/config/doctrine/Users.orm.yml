@@ -7,6 +7,19 @@ SmartSolutions\AdmistradorBundle\Entity\Users:
             id: true
             generator:
                 strategy: AUTO
+    manyToOne:
+        eps:
+            targetEntity: Eps
+            inversedBy: users
+            joinColumn:
+                name: id_eps
+                referencedColumnName: id
+        pension:
+            targetEntity: Pension
+            inversedBy: users
+            joinColumn:
+                name: id_pension
+                referencedColumnName: id
     fields:
         username:
             type: string

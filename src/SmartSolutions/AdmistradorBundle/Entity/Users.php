@@ -374,4 +374,61 @@ class Users implements UserInterface, \Serializable
     {
         return $this->isActive;
     }
+    
+    /**
+     * @var \SmartSolutions\AdmistradorBundle\Entity\Eps
+     */
+    private $eps;
+
+
+    /**
+     * Set eps
+     *
+     * @param \SmartSolutions\AdmistradorBundle\Entity\Eps $eps
+     * @return Users
+     */
+    public function setEps(\SmartSolutions\AdmistradorBundle\Entity\Eps $eps = null)
+    {
+        $this->eps = $eps;
+
+        return $this;
+    }
+
+    /**
+     * Get eps
+     *
+     * @return \SmartSolutions\AdmistradorBundle\Entity\Eps 
+     */
+    public function getEps()
+    {
+        return $this->eps;
+    }
+    /**
+     * @var \SmartSolutions\AdmistradorBundle\Entity\pension
+     */
+    private $pension;
+
+
+    /**
+     * Set pension
+     *
+     * @param \SmartSolutions\AdmistradorBundle\Entity\pension $pension
+     * @return Users
+     */
+    public function setPension(\SmartSolutions\AdmistradorBundle\Entity\pension $pension = null)
+    {
+        $this->pension = $pension;
+
+        return $this;
+    }
+
+    /**
+     * Get pension
+     *
+     * @return \SmartSolutions\AdmistradorBundle\Entity\pension 
+     */
+    public function getPension()
+    {
+        return $this->pension;
+    }
 }

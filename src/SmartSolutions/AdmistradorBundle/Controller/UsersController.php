@@ -147,7 +147,7 @@ class UsersController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Actualizar', 'attr' => array('class' => 'btn btn-success')));
 
         return $form;
     }
@@ -217,7 +217,7 @@ class UsersController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('users_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Eliminar', 'attr' => array('class' => 'btn btn-danger' )))
             ->getForm()
         ;
     }

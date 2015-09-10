@@ -1,16 +1,28 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Users edit</h1>
-
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('users') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+    	<h1>Editar Empleado</h1>
+	    {{ form_start(edit_form) }}
+		    {{ form_errors(edit_form) }}
+		 	    {{ form_row(edit_form.username) }}
+			    {{ form_row(edit_form.nombre) }}
+			    {{ form_row(edit_form.apellido) }}
+			    {{ form_row(edit_form.numDocumento) }}
+			    {{ form_row(edit_form.email) }}
+			    {{ form_row(edit_form.telefono) }}
+			    {{ form_row(edit_form.salarioBasico) }}
+			    {{ form_row(edit_form.rol) }}
+			    {{ form_row(edit_form.eps) }}
+		    	{{ form_row(edit_form.isactive) }}
+		 	<div class="hide">
+		 		{{ form_row(edit_form.password) }}
+		 		{{ form_row(edit_form.salt) }}
+		 	</div>
+		{{ form_end(edit_form) }}
+    </div>
+    
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    	{{ form(delete_form) }} <a href="{{ path('users') }}" >Atras</a>
+    </div>
 {% endblock %}
