@@ -21,6 +21,10 @@ class UsersController extends Controller
      */
     public function indexAction()
     {
+        if(!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
+            return $this->redirectToRoute('login');
+        }
+        
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('SmartSolutionsAdmistradorBundle:Users')->findAll();
@@ -35,11 +39,16 @@ class UsersController extends Controller
      */
     public function createAction(Request $request)
     {
+        if(!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
+            return $this->redirectToRoute('login');
+        }
+
         $entity = new Users();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $this->setSecurePassword($entity);
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -78,6 +87,10 @@ class UsersController extends Controller
      */
     public function newAction()
     {
+        if(!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
+            return $this->redirectToRoute('login');
+        }
+
         $entity = new Users();
         $form   = $this->createCreateForm($entity);
 
@@ -93,6 +106,10 @@ class UsersController extends Controller
      */
     public function showAction($id)
     {
+        if(!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
+            return $this->redirectToRoute('login');
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('SmartSolutionsAdmistradorBundle:Users')->find($id);
@@ -115,6 +132,10 @@ class UsersController extends Controller
      */
     public function editAction($id)
     {
+        if(!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
+            return $this->redirectToRoute('login');
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('SmartSolutionsAdmistradorBundle:Users')->find($id);
@@ -157,9 +178,14 @@ class UsersController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        if(!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
+            return $this->redirectToRoute('login');
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('SmartSolutionsAdmistradorBundle:Users')->find($id);
+        $current_pass = $entity->getPassword();
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Users entity.');
@@ -170,6 +196,10 @@ class UsersController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            if ($current_pass != $entity->getPassword()) {
+                $this->setSecurePassword($entity);
+            }
+            $em->persist($entity);
             $em->flush();
 
             return $this->redirect($this->generateUrl('users_edit', array('id' => $id)));
@@ -181,12 +211,23 @@ class UsersController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
+
+    private function setSecurePassword(&$entity) {
+        $entity->setSalt(md5(time()));
+        $encoder = new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha512', true, 10);
+        $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
+        $entity->setPassword($password);
+    }
     /**
      * Deletes a Users entity.
      *
      */
     public function deleteAction(Request $request, $id)
     {
+        if(!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
+            return $this->redirectToRoute('login');
+        }
+
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -202,6 +243,20 @@ class UsersController extends Controller
             $em->flush();
         }
 
+        return $this->redirect($this->generateUrl('users'));
+    }
+
+     public function updateStateAction($id,$state)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $proveedor = $em->getRepository('SmartSolutionsAdmistradorBundle:Users')->find($id);
+
+        $state_new = true;
+        if($state == '1'){
+            $state_new = false;
+        }
+        $proveedor->setIsActive($state_new);
+        $em->flush();
         return $this->redirect($this->generateUrl('users'));
     }
 

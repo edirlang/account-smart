@@ -4,6 +4,8 @@ namespace SmartSolutions\AdmistradorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 /**
  * Users
  */
@@ -52,11 +54,6 @@ class Users implements UserInterface, \Serializable
     /**
      * @var string
      */
-    private $rol;
-
-    /**
-     * @var string
-     */
     private $salt;
 
     /**
@@ -64,23 +61,23 @@ class Users implements UserInterface, \Serializable
      */
     private $password;
 
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-
      /**
      * @ORM\Column(name="is_active", type="boolean")
+     * @var boolean
      */
     private $isActive;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $grupo;
 
     public function __construct()
     {
         $this->isActive = true;
         // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid(null, true));
+        $this->salt = md5(uniqid(time(), true));
+        $this->grupo = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getId()
@@ -250,29 +247,6 @@ class Users implements UserInterface, \Serializable
     }
 
     /**
-     * Set rol
-     *
-     * @param string $rol
-     * @return Users
-     */
-    public function setRol($rol)
-    {
-        $this->rol = $rol;
-
-        return $this;
-    }
-
-    /**
-     * Get rol
-     *
-     * @return string 
-     */
-    public function getRol()
-    {
-        return $this->rol;
-    }
-
-    /**
      * Set salt
      *
      * @param string $salt
@@ -303,8 +277,8 @@ class Users implements UserInterface, \Serializable
      */
     public function setPassword($contraseña)
     {
+        
         $this->password = $contraseña;
-
         return $this;
     }
 
@@ -320,7 +294,7 @@ class Users implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return array($this->grupo->getRole());
     }
 
     public function eraseCredentials()
@@ -335,7 +309,7 @@ class Users implements UserInterface, \Serializable
             $this->username,
             $this->password,
             // see section on salt below
-            // $this->salt,
+            $this->salt,
         ));
     }
 
@@ -347,7 +321,7 @@ class Users implements UserInterface, \Serializable
             $this->username,
             $this->password,
             // see section on salt below
-            // $this->salt
+            $this->salt
         ) = unserialize($serialized);
     }
 
@@ -430,5 +404,52 @@ class Users implements UserInterface, \Serializable
     public function getPension()
     {
         return $this->pension;
+    }
+    
+    
+    /**
+     * Add grupo
+     *
+     * @param \SmartSolutions\AdmistradorBundle\Entity\grupo $grupo
+     * @return Users
+     */
+    public function setGrupo(\SmartSolutions\AdmistradorBundle\Entity\grupo $grupo)
+    {
+        $this->grupo = $grupo;
+
+        return $this;
+    }
+
+    /**
+     * Add grupo
+     *
+     * @param \SmartSolutions\AdmistradorBundle\Entity\grupo $grupo
+     * @return Users
+     */
+    public function addGrupo(\SmartSolutions\AdmistradorBundle\Entity\grupo $grupo)
+    {
+        $this->grupo[] = $grupo;
+
+        return $this;
+    }
+
+    /**
+     * Remove grupo
+     *
+     * @param \SmartSolutions\AdmistradorBundle\Entity\grupo $grupo
+     */
+    public function removeGrupo(\SmartSolutions\AdmistradorBundle\Entity\grupo $grupo)
+    {
+        $this->grupo->removeElement($grupo);
+    }
+
+    /**
+     * Get grupo
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGrupo()
+    {
+        return $this->grupo;
     }
 }

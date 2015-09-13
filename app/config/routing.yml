@@ -1,3 +1,7 @@
+smart_solutions_home:
+    resource: "@SmartSolutionsHomeBundle/Resources/config/routing.yml"
+    prefix:   /
+
 smart_solutions_admistrador:
     resource: "@SmartSolutionsAdmistradorBundle/Resources/config/routing.yml"
     prefix:   /admin

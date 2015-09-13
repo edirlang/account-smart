@@ -28,3 +28,6 @@ users_delete:
     path:     /{id}/delete
     defaults: { _controller: "SmartSolutionsAdmistradorBundle:Users:delete" }
     methods:  [POST, DELETE]
+users_state:
+    path:     /{id}/{state}/state
+    defaults: { _controller: "SmartSolutionsAdmistradorBundle:Users:updateState" }

@@ -20,6 +20,13 @@ SmartSolutions\AdmistradorBundle\Entity\Users:
             joinColumn:
                 name: id_pension
                 referencedColumnName: id
+   
+        grupo:
+            targetEntity: Grupo
+            inversedBy: users
+            joinColumn:
+                name: rol
+                referencedColumnName: id
     fields:
         username:
             type: string
@@ -43,9 +50,6 @@ SmartSolutions\AdmistradorBundle\Entity\Users:
         salarioBasico:
             type: integer
             column: salario_basico
-        rol:
-            type: string
-            length: '50'
         salt:
             type: string
             length: 255

@@ -21,6 +21,10 @@ class PensionController extends Controller
      */
     public function indexAction()
     {
+        if(!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
+            return $this->redirectToRoute('login');
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('SmartSolutionsAdmistradorBundle:Pension')->findAll();
@@ -35,6 +39,10 @@ class PensionController extends Controller
      */
     public function createAction(Request $request)
     {
+        if(!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
+            return $this->redirectToRoute('login');
+        }
+
         $entity = new Pension();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -78,6 +86,10 @@ class PensionController extends Controller
      */
     public function newAction()
     {
+        if(!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
+            return $this->redirectToRoute('login');
+        }
+
         $entity = new Pension();
         $form   = $this->createCreateForm($entity);
 
@@ -93,6 +105,10 @@ class PensionController extends Controller
      */
     public function showAction($id)
     {
+        if(!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
+            return $this->redirectToRoute('login');
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('SmartSolutionsAdmistradorBundle:Pension')->find($id);
@@ -115,6 +131,10 @@ class PensionController extends Controller
      */
     public function editAction($id)
     {
+        if(!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
+            return $this->redirectToRoute('login');
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('SmartSolutionsAdmistradorBundle:Pension')->find($id);
@@ -157,6 +177,10 @@ class PensionController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        if(!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
+            return $this->redirectToRoute('login');
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('SmartSolutionsAdmistradorBundle:Pension')->find($id);
@@ -187,6 +211,10 @@ class PensionController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        if(!$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
+            return $this->redirectToRoute('login');
+        }
+        
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 

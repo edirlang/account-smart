@@ -22,12 +22,17 @@ class UsersType extends AbstractType
             ->add('email', 'email' ,array('attr' => array('class' => 'form-control') ))
             ->add('telefono', 'number' ,array('attr' => array('class' => 'form-control') ))
             ->add('salarioBasico', 'text' ,array('attr' => array('class' => 'form-control') ))
-            ->add('rol', 'text' ,array('attr' => array('class' => 'form-control') ))
-            ->add('salt', 'text' ,array('attr' => array('class' => 'form-control') ))
-            ->add('password', 'text' ,array('attr' => array('class' => 'form-control') ))
+            ->add('grupo' ,'entity', array(
+                        'class' => 'SmartSolutionsAdmistradorBundle:Grupo', 
+                        'property' => 'nombre', 
+                        'required' => false,
+                        'multiple' => false,
+                        'expanded' => false,
+                        'attr' => array('class' => 'form-control') ))
+            ->add('password', 'password' ,array('attr' => array('class' => 'form-control'), 'required' => false))
             ->add('eps','entity', array('class' => 'SmartSolutionsAdmistradorBundle:Eps', 'property' => 'nombre', 'attr' => array('class' => 'form-control') ))
             ->add('pension','entity', array('class' => 'SmartSolutionsAdmistradorBundle:Pension', 'property' => 'nombre', 'attr' => array('class' => 'form-control') ))
-            ->add('isactive', 'choice', array('choices'  => array('1' => 'Activado', '0' => 'Desactivado'), 'attr' => array('class' => 'form-control'), 'label' => 'Estado' ))
+            ->add('isactive', 'checkbox' , array('attr' => array('class' => 'form-control'), 'label' => 'Estado' ))
         ;
     }
     

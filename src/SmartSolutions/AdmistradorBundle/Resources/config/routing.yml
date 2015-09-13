@@ -1,3 +1,7 @@
+smart_solutions_admistrador_proveedor:
+    resource: "@SmartSolutionsAdmistradorBundle/Resources/config/routing/proveedor.yml"
+    prefix:   /proveedor
+
 smart_solutions_admistrador_pension:
     resource: "@SmartSolutionsAdmistradorBundle/Resources/config/routing/pension.yml"
     prefix:   /pension
