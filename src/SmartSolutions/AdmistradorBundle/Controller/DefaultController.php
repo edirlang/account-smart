@@ -5,12 +5,13 @@ namespace SmartSolutions\AdmistradorBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use SmartSolutions\AdmistradorBundle\Clientes;
 
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    public function indexAction()
     {
-        return $this->render('SmartSolutionsAdmistradorBundle:Default:index.html.twig', array('name' => $name));
+        return $this->render('SmartSolutionsAdmistradorBundle:Default:home.html.twig');
     }
 
     public function loginAction(Request $request)
@@ -35,14 +36,19 @@ class DefaultController extends Controller
 
 	public function loginCheckAction()
     {
-    	$em = $this->getDoctrine()->getManager();
+    	$user = $this->get('security.context')->getToken()->getUser();;
 
-        $entities = $em->getRepository('SmartSolutionsAdmistradorBundle:Clientes')->findAll();
-
-        return $this->render('SmartSolutionsAdmistradorBundle:Clientes:index.html.twig', array(
-            'entities' => $entities,
-        ));
-        // this controller will not be executed,
-        // as the route is handled by the Security system
+        if(!$user->getIsActive()){
+            return $this->redirect($this->generateUrl('logout'));
+        }
+    	if($user->getRoles() == array('role_contador')){
+    		return $this->redirect($this->generateUrl('smart_solutions_contador_homepage'));
+    	}elseif ($user->getRoles() == array('role_gerente')){
+    		return $this->redirect($this->generateUrl('smart_solutions_gerente_homepage'));
+    	}elseif ($user->getRoles() == array('role_vendedor')){
+    		return $this->redirect($this->generateUrl('smart_solutions_vendedor_homepage'));
+    	}elseif ($user->getRoles() == array('role_admin')){
+    		return $this->redirect($this->generateUrl('smart_solutions_admistrador_homepage'));
+    	}
     }
 }

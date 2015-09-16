@@ -1,0 +1,144 @@
+{% set menu = '::base.html.twig' %}
+{% for rol in app.user.getRoles()  %}
+{% if rol == 'role_contador' %}
+{% set menu = '::Contador.html.twig' %}
+{% endif %}
+{% endfor %}
+{% extends menu %}
+
+{% block body %}
+
+<div class="row">
+  <div id="Mensaje" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  </div>
+  <div class="col s12 m6 l4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Nueva Transacion</h3>
+      </div>
+      <div class="panel-body">
+        <form id="formulario" name="formulario" method="POST" role="form" on="">
+          <div class="form-group">
+
+            <label for="">Fecha</label>
+            <input type="date" class="validate" id="Fecha" name="Fecha" placeholder="dd/mm/aaaa" required="" title="Ingrese la Fecha">
+
+            <label for="">Codigo</label>
+            <select class="browser-default" name="codigo" id="codigo">
+              {% for cuenta in cuentas %}
+              <option value="{{ cuenta.id }}">{{ cuenta.codigo }} - {{ cuenta.descripcion }}</option>
+              {% endfor %}
+            </select>
+            <label for="">Descripcion</label>
+            <input type="text" class="validate" name="Descripcion" id="Descripcion" placeholder="Descripcion de actividad" required="" title="Ingrese la descripcion">
+
+            <label for="">Naturaleza</label>
+            <select class="browser-default" name="Naturaleza" value="D" id="Naturaleza">
+              <option value="D">Debito</option>
+              <option value="C">Credito</option>
+            </select>
+
+            <label for="">Valor</label>
+            <input type="number" class="validate" name="Valor" id="Valor" placeholder="Valor a tramitar" required="" title="Ingrese el valor">
+
+          </div>
+          <a class="btn-floating btn-large waves-effect waves-light red" onclick="AgregarCuenta()"><i class="material-icons">add</i></a>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col s-12 m6 l8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Contenido de Transacion</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-condensed table-hover">
+          <thead>
+            <tr>
+              <th>Codigo</th>
+              <th>Fecha</th>
+              <th>Naturaleza</th>
+              <th>Descripcion</th>
+              <th>Valor</th>
+            </tr>
+          </thead>
+          <tbody id="Filas">
+
+          </tbody>
+        </table>
+        <p>Debito: <input type='nuber' value='0' readonly="readonly" id="debito"></p>
+        <p>Credito: <input type='nuber' value='0' readonly="readonly" id="credito"></p>
+        <button class="btn waves-effect waves-light green" type="submit" name="action" id="Enviar">Guardar
+          <i class="material-icons right">save</i>
+        </button>
+        <a type="button" class="btn waves-effect waves-light red" href="Transacion-manual.php">Cancelar
+          <i class="material-icons right">close</i>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</div>
+<script src="{{ asset('js/jquery.validate.js') }}"></script>
+<script type="text/javascript">
+  var transaciones= new Array();
+  var debtio;
+  var credito;
+
+  function AgregarCuenta()
+  {
+    alert($("#codigo option:selected").val())
+    var valor = $("#Valor").val()*1;
+    if($("#Naturaleza").val() == 'D'){
+      $("#debito").val($("#debito").val()*1+valor);
+    }else{
+      $("#credito").val($("#credito").val()*1+valor);
+    }
+    var datos = new Array($("#codigo option:selected").val(),$("#Fecha").val(),$("#Naturaleza").val(),$("#Descripcion").val(),$("#Valor").val());
+    transaciones.push(datos);
+
+
+    $("<tr>").append(
+      $('<td>', { text: $("#codigo option:selected").val()
+    }), $('<td>', { text: $("#Fecha").val() 
+      }), $('<td>', { text: $("#Naturaleza").val()  
+        }), $('<td>', { text: $("#Descripcion").val()  
+          }), $('<td>', { text: $("#Valor").val()  
+            })).hide().appendTo('#Filas').fadeIn('slow');
+    
+    VaciarFormulario();
+  }
+
+  function VaciarFormulario(){
+    $('#formulario').each (function(){
+      this.reset();
+    });
+
+  }
+
+  function EnviarBD(){
+
+    var jdatos = JSON.stringify(transacion); 
+    $.post("guardar_transaiones",{
+      jdatos: jdatos
+    },procesar); 
+  }
+
+  function procesar(datos){
+   if(datos==1){
+    alert("Correcto");
+    setTimeout("location.href='Transacion-manual'", 50);
+  }else{
+    alert(datos);
+    if($('#error').length){
+
+    }else{
+
+      $('#Mensaje').append("<div id='error' class='alert alert-danger'>Error: No se cumplio la doble partida </div>");
+    }
+  }
+}
+
+</script>
+{% endblock %}

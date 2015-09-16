@@ -19,6 +19,9 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new SmartSolutions\AdmistradorBundle\SmartSolutionsAdmistradorBundle(),
             new SmartSolutions\HomeBundle\SmartSolutionsHomeBundle(),
+            new SmartSolutions\ContadorBundle\SmartSolutionsContadorBundle(),
+            new SmartSolutions\GerenteBundle\SmartSolutionsGerenteBundle(),
+            new SmartSolutions\VendedorBundle\SmartSolutionsVendedorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -1,0 +1,38 @@
+{% set menu = '::base.html.twig' %}
+{% for rol in app.user.getRoles()  %}
+    {% if rol == 'role_contador' %}
+    {% set menu = '::Contador.html.twig' %}
+{% endif %}
+{% endfor %}
+{% extends menu %}
+
+{% block body %}
+    
+    <h1>Libro Contable</h1>
+
+    <a href="{{ path('contador_transacion_new') }}" class="btn btn-primary">Nueva Transacion</a>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Docuento</th>
+                <th>Codigo</th>
+                <th>Descripcion</th>
+                <th>Tipo</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.docuento.id }}</a></td>
+                <td>{{ entity.cuenta.id }}</td>
+                <td>{{ entity.cuenta.descripcion }}</td>
+                <td>{{ entity.naturaleza }}</td>
+                <td>{{ entity.valor }}</td>
+                
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}

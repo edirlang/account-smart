@@ -15,24 +15,25 @@ class UsersType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', 'text' ,array('attr' => array('class' => 'form-control') ))
-            ->add('nombre', 'text' ,array('attr' => array('class' => 'form-control') ))
-            ->add('apellido', 'text' ,array('attr' => array('class' => 'form-control') ))
-            ->add('numDocumento', 'number' ,array('attr' => array('class' => 'form-control') ))
-            ->add('email', 'email' ,array('attr' => array('class' => 'form-control') ))
-            ->add('telefono', 'number' ,array('attr' => array('class' => 'form-control') ))
-            ->add('salarioBasico', 'text' ,array('attr' => array('class' => 'form-control') ))
+            ->add('username', 'text' ,array('attr' => array('class' => 'validate') ))
+            ->add('nombre', 'text' ,array('attr' => array('class' => 'validate') ))
+            ->add('apellido', 'text' ,array('attr' => array('class' => 'validate') ))
+            ->add('numDocumento', 'number' ,array('attr' => array('class' => 'validate') ))
+            ->add('email', 'email' ,array('attr' => array('class' => 'validate') ))
+            ->add('telefono', 'number' ,array('attr' => array('class' => 'validate') ))
+            ->add('salarioBasico', 'text' ,array('attr' => array('class' => 'validate') ))
             ->add('grupo' ,'entity', array(
                         'class' => 'SmartSolutionsAdmistradorBundle:Grupo', 
                         'property' => 'nombre', 
                         'required' => false,
                         'multiple' => false,
-                        'expanded' => false,
-                        'attr' => array('class' => 'form-control') ))
-            ->add('password', 'password' ,array('attr' => array('class' => 'form-control'), 'required' => false))
-            ->add('eps','entity', array('class' => 'SmartSolutionsAdmistradorBundle:Eps', 'property' => 'nombre', 'attr' => array('class' => 'form-control') ))
-            ->add('pension','entity', array('class' => 'SmartSolutionsAdmistradorBundle:Pension', 'property' => 'nombre', 'attr' => array('class' => 'form-control') ))
-            ->add('isactive', 'checkbox' , array('attr' => array('class' => 'form-control'), 'label' => 'Estado' ))
+                        'expanded' => false
+                        , 'attr' => array('class' => 'browser-default')
+                        ))
+            ->add('password', 'password' ,array('attr' => array('class' => 'validate'), 'required' => false))
+            ->add('eps','entity', array('class' => 'SmartSolutionsAdmistradorBundle:Eps', 'property' => 'nombre', 'attr' => array('class' => 'browser-default') ))
+            ->add('pension','entity', array('class' => 'SmartSolutionsAdmistradorBundle:Pension', 'property' => 'nombre', 'attr' => array('class' => 'browser-default') ))
+            ->add('isactive', 'checkbox' , array('label' => 'Estado', 'attr' => array('class' => 'lever') ))
         ;
     }
     

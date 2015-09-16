@@ -19,5 +19,5 @@ smart_solutions_admistrador_users:
     prefix:   /users
 
 smart_solutions_admistrador_homepage:
-    path:     /hello/{name}
+    path:     /homeAdmin
     defaults: { _controller: SmartSolutionsAdmistradorBundle:Default:index }
